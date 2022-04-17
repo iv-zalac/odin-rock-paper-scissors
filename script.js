@@ -78,7 +78,7 @@ function game() {
     }
 
     //print round outcome and current score
-    console.log(`${result[0]}\nScore:${playerScore} - ${computerScore}`);
+    console.log(`${result[0]}\nScore: ${playerScore} - ${computerScore}`);
 
     i++;
   }
@@ -86,7 +86,9 @@ function game() {
   //print game outcome message
   if (playerScore > computerScore) {
     console.log("You win!!");
-  } else {
+  } else if (playerScore < computerScore) {
     console.log("You lose!!");
+  } else {
+    console.log("It's a tie!!");
   }
 }
