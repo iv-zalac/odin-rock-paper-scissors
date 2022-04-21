@@ -11,7 +11,7 @@ function computerPlay() {
 //playRound() plays one round of rps and returns a string
 //declaring a winner between computer and player
 
-function playRound(playerSelection, computerSelection) {
+const playRound = function (playerSelection, computerSelection) {
   //create a result array with result string and a number that determines the outcome so there is only one return statement
   // 0 - tie
   // 1 - win (for player)
@@ -46,9 +46,9 @@ function playRound(playerSelection, computerSelection) {
     result[0] = `You Lose! ${player} loses to ${computer}`;
     result[1] = 2;
   }
-
+  console.log(result); //added-remove
   return result;
-}
+};
 
 //game() plays 5 rounds and declares a winner
 
@@ -64,8 +64,28 @@ function game() {
 
   console.log("Let the game begin!!");
   //while loop to iterate 5 rounds
+  // let i = 0;
+  // while (i < 5) {
+  //   playerSelection = window.prompt("Enter: rock, paper or scissors");
+  //   computerSelection = computerPlay();
+  //   result = playRound(playerSelection, computerSelection);
+
+  //   //keep track of scores
+  //   if (result[1] === 1) {
+  //     playerScore++;
+  //   } else if (result[1] === 2) {
+  //     computerScore++;
+  //   }
+
+  //   //print round outcome and current score
+  //   console.log(`${result[0]}\nScore: ${playerScore} - ${computerScore}`);
+
+  //   i++;
+  // }
+
+  //no round cap while loop
   let i = 0;
-  while (i < 5) {
+  while (true) {
     playerSelection = window.prompt("Enter: rock, paper or scissors");
     computerSelection = computerPlay();
     result = playRound(playerSelection, computerSelection);
@@ -92,3 +112,10 @@ function game() {
     console.log("It's a tie!!");
   }
 }
+
+const rock = document.querySelector("#rock");
+const paper = document.querySelector("#paper");
+const scissors = document.querySelector("#scissors");
+rock.addEventListener("click", () => playRound("rock", computerPlay()));
+paper.addEventListener("click", () => playRound("paper", computerPlay()));
+scissors.addEventListener("click", () => playRound("scissors", computerPlay()));
