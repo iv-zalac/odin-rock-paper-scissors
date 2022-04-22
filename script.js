@@ -1,15 +1,52 @@
-//Game is played against a computer.
+//game is played against a computer.
+let playerScore = 0;
+let computerScore = 0;
+let roundCount = 0;
+let gameCount = 1;
 
-//computerPlay() randomly returns rock, paper or scissors
 function computerPlay() {
-  //create array with values to pick randomly
   const rps = ["rock", "paper", "scissors"];
-  //randomly pick one and return
   return rps[Math.floor(Math.random() * rps.length)];
 }
 
-//playRound() plays one round of rps and returns a string
-//declaring a winner between computer and player
+function gameOutcome(playerScore, computerScore) {
+  let outcome;
+  if (playerScore > computerScore) {
+    outcome = "You win!!";
+  } else if (playerScore < computerScore) {
+    outcome = "You lose!!";
+  } else {
+    outcome = "It's a tie!!";
+  }
+  return outcome;
+}
+
+function reset() {
+  roundCount = 0;
+  playerScore = 0;
+  computerScore = 0;
+  gameCount++;
+  createDiv(); //create new div after reset
+}
+
+function declareWinner() {
+  if (roundCount === 5) {
+    //appends header to div with winner declaration
+    declareWinnerHeader(gameOutcome(playerScore, computerScore));
+    reset();
+  }
+}
+
+function keepScore(result) {
+  if (result[1] === 1) {
+    playerScore++;
+  } else if (result[1] === 2) {
+    computerScore++;
+  }
+  roundCount++;
+  parText(playerScore, computerScore); //update score to p element
+  declareWinner();
+}
 
 const playRound = function (playerSelection, computerSelection) {
   //create a result array with result string and a number that determines the outcome so there is only one return statement
@@ -46,72 +83,9 @@ const playRound = function (playerSelection, computerSelection) {
     result[0] = `You Lose! ${player} loses to ${computer}`;
     result[1] = 2;
   }
-  console.log(result); //added-remove
-  return result;
+
+  keepScore(result);
 };
-
-//game() plays 5 rounds and declares a winner
-
-function game() {
-  //variables to store scores
-  let playerScore = 0;
-  let computerScore = 0;
-  //variables to store players and computers choice
-  let playerSelection = "";
-  let computerSelection = "";
-  //empty variable to store result in
-  let result = null;
-
-  console.log("Let the game begin!!");
-  //while loop to iterate 5 rounds
-  // let i = 0;
-  // while (i < 5) {
-  //   playerSelection = window.prompt("Enter: rock, paper or scissors");
-  //   computerSelection = computerPlay();
-  //   result = playRound(playerSelection, computerSelection);
-
-  //   //keep track of scores
-  //   if (result[1] === 1) {
-  //     playerScore++;
-  //   } else if (result[1] === 2) {
-  //     computerScore++;
-  //   }
-
-  //   //print round outcome and current score
-  //   console.log(`${result[0]}\nScore: ${playerScore} - ${computerScore}`);
-
-  //   i++;
-  // }
-
-  //no round cap while loop
-  let i = 0;
-  while (true) {
-    playerSelection = window.prompt("Enter: rock, paper or scissors");
-    computerSelection = computerPlay();
-    result = playRound(playerSelection, computerSelection);
-
-    //keep track of scores
-    if (result[1] === 1) {
-      playerScore++;
-    } else if (result[1] === 2) {
-      computerScore++;
-    }
-
-    //print round outcome and current score
-    console.log(`${result[0]}\nScore: ${playerScore} - ${computerScore}`);
-
-    i++;
-  }
-
-  //print game outcome message
-  if (playerScore > computerScore) {
-    console.log("You win!!");
-  } else if (playerScore < computerScore) {
-    console.log("You lose!!");
-  } else {
-    console.log("It's a tie!!");
-  }
-}
 
 const rock = document.querySelector("#rock");
 const paper = document.querySelector("#paper");
@@ -119,3 +93,30 @@ const scissors = document.querySelector("#scissors");
 rock.addEventListener("click", () => playRound("rock", computerPlay()));
 paper.addEventListener("click", () => playRound("paper", computerPlay()));
 scissors.addEventListener("click", () => playRound("scissors", computerPlay()));
+
+function createDiv() {
+  const div = document.createElement("div");
+  div.id = "div" + gameCount;
+  const h2 = document.createElement("h2");
+  h2.innerText += `Round ${gameCount}. Fight!`;
+  div.appendChild(h2);
+  const p = document.createElement("p");
+  p.id = "par" + gameCount;
+  p.innerText = "0 - 0";
+  div.appendChild(p);
+  document.body.appendChild(div);
+}
+
+if (gameCount === 1) createDiv(); //create first div
+
+function declareWinnerHeader(outcome) {
+  const h3 = document.createElement("h3");
+  const div = document.querySelector(`#div${gameCount}`);
+  h3.innerText = `${outcome}`;
+  div.appendChild(h3);
+}
+
+function parText(playerScore, computerScore) {
+  const p = document.querySelector(`#par${gameCount}`);
+  p.innerText = `${playerScore} - ${computerScore}`;
+}
