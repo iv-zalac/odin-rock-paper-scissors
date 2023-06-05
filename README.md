@@ -1,5 +1,5 @@
 # odin-rock-paper-scissors
 
-Simple console rock paper scissors game.
+Simple rock paper scissors game.
 
-I try to use what i have learned through course. That includes practicing atomic commits and problem solving steps in writing code. Those are: understand the problem, plan, write pseudocode, divide big problem into smaller problems and then write the code.
+I try to apply what I have learned through my course, which includes practicing atomic commits and following problem-solving steps in writing code. These steps involve understanding the problem, planning, writing pseudocode, breaking down the big problem into smaller ones, and then writing the actual code.
